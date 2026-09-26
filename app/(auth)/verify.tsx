@@ -1,7 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import { useSignUp } from "@clerk/expo";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,21 +10,36 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const VerifyEmail = () => {
     const { signUp, errors, fetchStatus } = useSignUp();
     const [code, setCode] = useState("");
+    const [verificationMessage, setVerificationMessage] = useState("");
+    const verificationInProgress = useRef(false);
 
     const isLoading = fetchStatus === "fetching";
 
+    const finalizeIfComplete = async () => {
+        if (signUp.status !== "complete") return false;
+
+        await signUp.finalize({
+            navigate: () => router.replace("/(tabs)"),
+        });
+        return true;
+    };
+
     const handleVerify = async () => {
-        const { error } = await signUp.verifications.verifyEmailCode({ code });
+        if (!code.trim() || isLoading || verificationInProgress.current) return;
+
+        if (await finalizeIfComplete()) return;
+
+        verificationInProgress.current = true;
+        const { error } = await signUp.verifications.verifyEmailCode({ code: code.trim() });
         if (error) {
-            console.error("Verification failed:", JSON.stringify(error, null, 2));
+            if (await finalizeIfComplete()) return;
+            setVerificationMessage("We couldn't verify that code. Check it and try again. If you've had several attempts, please wait before retrying.");
+            verificationInProgress.current = false;
             return;
         }
 
-        if (signUp.status === "complete") {
-            await signUp.finalize({
-                navigate: () => router.replace("/(tabs)"),
-            });
-        }
+        await finalizeIfComplete();
+        verificationInProgress.current = false;
     };
 
     return (
@@ -41,7 +56,10 @@ const VerifyEmail = () => {
 
                     <TextInput
                         value={code}
-                        onChangeText={setCode}
+                        onChangeText={(value) => {
+                            setCode(value);
+                            setVerificationMessage("");
+                        }}
                         placeholder="000000"
                         keyboardType="numeric"
                         className="input-pill mb-2 text-center paragraph-semibold"
@@ -52,8 +70,19 @@ const VerifyEmail = () => {
                             {errors.fields.code.message}
                         </Text>
                     )}
+                    {verificationMessage ? (
+                        <Text className="small-bold text-error mb-4 text-center">
+                            {verificationMessage}
+                        </Text>
+                    ) : null}
 
-                    <CustomButton title="Verify" onPress={handleVerify} isLoading={isLoading} style="mt-4" />
+                    <CustomButton
+                        title="Verify"
+                        onPress={handleVerify}
+                        isLoading={isLoading}
+                        disabled={!code.trim()}
+                        style="mt-4"
+                    />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>

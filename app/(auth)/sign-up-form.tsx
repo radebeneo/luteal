@@ -26,7 +26,7 @@ const SignUpForm = () => {
     const [agreed, setAgreed] = useState(false);
 
     const isLoading = fetchStatus === "fetching";
-    const canSubmit = fullName.trim().length > 0 && email.trim().length > 0 && password.length > 0 && agreed && !isLoading;
+    const canSubmit = fullName.trim().length > 0 && email.trim().length > 0 && password.length >= 15 && agreed && !isLoading;
 
     const handleSignUp = async () => {
         if (!canSubmit) return;
@@ -123,6 +123,9 @@ const SignUpForm = () => {
                             }
                             onRightIconPress={() => setShowPassword((prev) => !prev)}
                         />
+                        <Text className="small-regular text-gray-200 mt-1 pl-2">
+                            Use at least 15 characters.
+                        </Text>
                         {errors.fields.password && (
                             <Text className="small-bold text-error mt-1 pl-2">
                                 {errors.fields.password.message}
