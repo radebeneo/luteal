@@ -2,7 +2,6 @@ import DeviceMascot from "@/components/onboarding/DeviceMascot";
 import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
 import Sunburst from "@/components/onboarding/Sunburst";
 import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
-import { router } from "expo-router";
 import { Dimensions, Text, View } from "react-native";
 
 const MASCOT_SIZE = Dimensions.get("window").width * 0.84;
@@ -11,7 +10,7 @@ const OnboardingStepFour = () => {
     const handleSkip = useCompleteOnboarding();
 
     const handleNext = () => {
-        router.push("/onboarding/name");
+        handleSkip();
     };
 
     return (

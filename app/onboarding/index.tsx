@@ -8,7 +8,7 @@ const OnboardingSplash = () => {
     const handleSkip = useCompleteOnboarding();
 
     const handleNext = () => {
-        router.push("/onboarding/name");
+        router.push("/onboarding/step-2");
     };
 
     return (
