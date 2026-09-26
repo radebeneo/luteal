@@ -1,18 +1,13 @@
 import BloomyMascot from "@/components/onboarding/BloomyMascot";
 import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
-import { useOnboardingStore } from "@/store/onboarding.store";
+import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
 import { router } from "expo-router";
 import { Dimensions, Text } from "react-native";
 
 const MASCOT_SIZE = Dimensions.get("window").width * 0.58;
 
 const OnboardingStepTwo = () => {
-    const complete = useOnboardingStore((state) => state.complete);
-
-    const handleSkip = () => {
-        complete();
-        router.replace("/(tabs)");
-    };
+    const handleSkip = useCompleteOnboarding();
 
     const handleNext = () => {
         router.push("/onboarding/step-3");

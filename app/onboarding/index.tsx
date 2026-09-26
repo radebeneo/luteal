@@ -1,16 +1,11 @@
 import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
-import { useOnboardingStore } from "@/store/onboarding.store";
+import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
 const OnboardingSplash = () => {
-    const complete = useOnboardingStore((state) => state.complete);
-
-    const handleSkip = () => {
-        complete();
-        router.replace("/(tabs)");
-    };
+    const handleSkip = useCompleteOnboarding();
 
     const handleNext = () => {
         router.push("/onboarding/name");

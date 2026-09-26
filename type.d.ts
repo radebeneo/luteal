@@ -94,6 +94,7 @@ interface CustomButtonProps {
     leftIcon?: React.ReactNode;
     textStyle?: string;
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 interface CustomHeaderProps {
@@ -107,6 +108,10 @@ interface CustomInputProps {
     label: string;
     secureTextEntry?: boolean;
     keyboardType?: "default" | "email-address" | "numeric" | "phone-pad";
+    icon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
+    onRightIconPress?: () => void;
+    variant?: "underline" | "pill";
 }
 
 interface ProfileFieldProps {

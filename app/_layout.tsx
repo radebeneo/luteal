@@ -1,9 +1,17 @@
 import { useOnboardingStore } from "@/store/onboarding.store";
+import { ClerkProvider } from "@clerk/expo";
+import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from '@sentry/react-native';
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import './globals.css';
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!publishableKey) {
+  throw new Error("Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env file");
+}
 
 Sentry.init({
   dsn: 'https://7164bfca466ccf658e642a4909daa88f@o4510712903237632.ingest.de.sentry.io/4510712961171536',
@@ -53,11 +61,14 @@ export default Sentry.wrap(function RootLayout() {
   if(!fontsLoaded || !hasHydrated) return null
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" redirect={!completed} />
-      <Stack.Screen name="onboarding" redirect={completed} />
-      <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
-    </Stack>
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" redirect={!completed} />
+        <Stack.Screen name="onboarding" redirect={completed} />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
+      </Stack>
+    </ClerkProvider>
   );
 
 });

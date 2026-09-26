@@ -54,5 +54,12 @@ export const onboardingSteps = [
 ] as const;
 
 export const images = {
-    
+    home: require("@/assets/icons/home.png"),
+    search: require("@/assets/icons/search.png"),
+    bag: require("@/assets/icons/bag.png"),
+    person: require("@/assets/icons/person.png"),
+    check: require("@/assets/icons/check.png"),
+    star: require("@/assets/icons/star.png"),
+    arrowBack: require("@/assets/icons/arrow-back.png"),
+    trash: require("@/assets/icons/trash.png"),
 };

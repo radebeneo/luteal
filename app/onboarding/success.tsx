@@ -1,12 +1,11 @@
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
-import { useOnboardingStore } from "@/store/onboarding.store";
-import { router } from "expo-router";
+import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SuccessStep = () => {
-    const { complete } = useOnboardingStore();
+    const completeOnboarding = useCompleteOnboarding();
 
     return (
         <SafeAreaView className="flex-1 bg-blush-100">
@@ -25,10 +24,7 @@ const SuccessStep = () => {
 
                     <CustomButton
                         title="Back to Home"
-                        onPress={() => {
-                            complete();
-                            router.replace("/(tabs)");
-                        }}
+                        onPress={completeOnboarding}
                     />
                 </View>
             </View>
