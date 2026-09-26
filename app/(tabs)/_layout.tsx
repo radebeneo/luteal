@@ -10,7 +10,7 @@ import { TabBarIconProps } from "@/type";
 
 const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
     <View className="tab-icon">
-        <Image source={icon} className="size-7" resizeMode="contain" tintColor={focused ? '#FE8C00' : '#5D5F6D'}/>
+        <Image source={icon} className="size-7" resizeMode="contain" tintColor={focused ? '#B98CDD' : '#5D5F6D'}/>
         <Text className={cn('text-sm font-bold', focused ? 'text-primary' : 'text-gray-200')}>
             {title}
         </Text>
@@ -52,24 +52,24 @@ const TabLayout = () => {
                 <Tabs.Screen
                     name='search'
                     options={{
-                        title: 'Search',
-                        tabBarIcon: ({ focused }) => <TabBarIcon title="Search" icon={images.search} focused={focused}/>
+                        title: 'Resources',
+                        tabBarIcon: ({ focused }) => <TabBarIcon title="Resources" icon={images.search} focused={focused}/>
                     }}
                 />
 
                 <Tabs.Screen
                     name='cart'
                     options={{
-                        title: 'Cart',
-                        tabBarIcon: ({ focused }) => <TabBarIcon title="Cart" icon={images.bag} focused={focused}/>
+                        title: 'Pocket',
+                        tabBarIcon: ({ focused }) => <TabBarIcon title="Pocket" icon={images.bag} focused={focused}/>
                     }}
                 />
 
                 <Tabs.Screen
                     name='profile'
                     options={{
-                        title: 'Profile',
-                        tabBarIcon: ({ focused }) => <TabBarIcon title="Profile" icon={images.person} focused={focused}/>
+                        title: 'Settings',
+                        tabBarIcon: ({ focused }) => <TabBarIcon title="Settings" icon={images.person} focused={focused}/>
                     }}
                 />
             </Tabs>

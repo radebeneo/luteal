@@ -1,8 +1,8 @@
-import {View, Text, FlatList, TouchableOpacity, Platform} from 'react-native'
-import React, {useState} from 'react'
-import {Category} from "@/type";
-import {router, useLocalSearchParams} from "expo-router";
+import { Category } from "@/type";
 import cn from "clsx";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from 'react';
+import { FlatList, Platform, Text, TouchableOpacity } from 'react-native';
 
 const FilterComponent = ({categories}: {categories: Category[]}) => {
 
@@ -31,7 +31,7 @@ const FilterComponent = ({categories}: {categories: Category[]}) => {
         renderItem={({item}) => (
             <TouchableOpacity
                 key={item.$id}
-                className={cn('filter', active === item.$id ? 'bg-amber-500': 'bg-white')}
+                className={cn('filter', active === item.$id ? 'bg-primary': 'bg-white')}
                 style={Platform.OS === 'android' ? {elevation : 5 , shadowColor: '#878787'}: {}}
                 onPress={() => handlePress(item.$id)}
             >

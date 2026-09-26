@@ -1,9 +1,9 @@
-import CartButton from "@/components/CartButton";
+import BloomyButton from "@/components/BloomyButton";
 import FilterComponent from "@/components/FilterComponent";
-import MenuCard from "@/components/MenuCard";
+import ResourceCard from "@/components/ResourceCard";
 import SearchBar from "@/components/SearchBar";
 import dummyData from "@/lib/data";
-import { Category, MenuItem } from "@/type";
+import { Category, ResourceArticle } from "@/type";
 import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import { FlatList, Text, View } from 'react-native';
@@ -13,15 +13,15 @@ const categories: Category[] = dummyData.categories.map((category) => ({
     ...category,
     $id: category.name,
 }));
-const menu: MenuItem[] = dummyData.menu.map((item, index) => ({
+const resources: ResourceArticle[] = dummyData.resources.map((item, index) => ({
     ...item,
-    $id: `menu-${index + 1}`,
+    $id: `resource-${index + 1}`,
 }));
 
 const Search = () => {
 
     const {category, query} = useLocalSearchParams<{query?: string, category?: string}> ()
-    const data = menu.filter((item) =>
+    const data = resources.filter((item) =>
         (!category || item.category_name === category) &&
         (!query || item.name.toLowerCase().includes(query.toLowerCase()))
     );
@@ -38,7 +38,7 @@ const Search = () => {
 
                     return (
                         <View className={cn('flex-1 max-w-[48%]', !isFirstRightColItem ? 'mt-10' : 'mt-0')}>
-                            <MenuCard item={item} />
+                            <ResourceCard item={item} />
                         </View>
                     )
                 }}
@@ -50,12 +50,12 @@ const Search = () => {
                     <View className="my-5 gap-5">
                         <View className="flex-between flex-row w-full">
                             <View className="flex-start">
-                                <Text className="small-bold uppercase text-primary">Search</Text>
+                                <Text className="small-bold uppercase text-primary">Resources</Text>
                                 <View className="flex-start flex-row gap-x-1 mt-0.5">
-                                    <Text className="paragraph-semibold text-dark-100">Find your favourite food</Text>
+                                    <Text className="paragraph-semibold text-dark-100">Find support for how you feel</Text>
                                 </View>
                             </View>
-                            <CartButton/>
+                            <BloomyButton/>
                         </View>
                         <SearchBar/>
                         <FilterComponent categories={categories}/>
@@ -71,3 +71,4 @@ const Search = () => {
     )
 }
 export default Search
+

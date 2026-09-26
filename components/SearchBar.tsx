@@ -1,8 +1,7 @@
-import {View, TextInput, TouchableOpacity, Image} from 'react-native'
-import React, {useState} from 'react'
-import {router, useLocalSearchParams} from "expo-router";
-import {images} from "@/constants";
-import {setParams} from "expo-router/build/global-state/routing";
+import { images } from "@/constants";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from 'react';
+import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 
 
 const SearchBar = () => {
@@ -30,7 +29,7 @@ const SearchBar = () => {
             <TextInput
                 className="flex-1 p-5"
 
-                placeholder="Search for pizzas, burgers ..."
+                placeholder="Search symptoms, resources ..."
                 value={query}
                 onChangeText={handleSearch}
                 onSubmitEditing={handleSubmit}

@@ -1,7 +1,8 @@
+import { useOnboardingStore } from "@/store/onboarding.store";
 import * as Sentry from '@sentry/react-native';
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import './globals.css';
 
 Sentry.init({
@@ -33,13 +34,30 @@ export default Sentry.wrap(function RootLayout() {
     "QuickSand-Light": require('../assets/fonts/Quicksand-Light.ttf'),
   })
 
+  const completed = useOnboardingStore((state) => state.completed);
+  const [hasHydrated, setHasHydrated] = useState(useOnboardingStore.persist.hasHydrated());
+
+  useEffect(() => {
+    if (useOnboardingStore.persist.hasHydrated()) {
+      setHasHydrated(true);
+      return;
+    }
+    return useOnboardingStore.persist.onFinishHydration(() => setHasHydrated(true));
+  }, []);
+
   useEffect(() => {
     if (error) throw error
     if (fontsLoaded) SplashScreen.hideAsync()
   }, [fontsLoaded, error])
 
-  if(!fontsLoaded) return null
+  if(!fontsLoaded || !hasHydrated) return null
 
-  return <Stack screenOptions={{headerShown: false}}/>;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" redirect={!completed} />
+      <Stack.Screen name="onboarding" redirect={completed} />
+      <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
+    </Stack>
+  );
 
 });

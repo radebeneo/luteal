@@ -1,14 +1,19 @@
-export interface MenuItem {
+export type CyclePhase = "menstrual" | "follicular" | "ovulation" | "luteal";
+
+export interface ResourceArticle {
     $id: string;
     name: string;
-    price: number;
-    image_url: string;
     description: string;
-    calories: number;
-    protein: number;
-    rating: number;
     category_name: string;
-    customizations: string[];
+    tags: string[];
+}
+
+export interface SymptomEntry {
+    $id: string;
+    name: string;
+    description: string;
+    category_name: string;
+    tags: string[];
 }
 
 export interface Category {
@@ -17,31 +22,56 @@ export interface Category {
     description: string;
 }
 
-export interface CartCustomization {
-    id: string;
-    name: string;
-    price: number;
-    type: string;
+export interface PlanItemType {
+    id: string; // affirmation/plan item id
+    title: string;
+    body: string;
+    tags?: string[];
+    savedAt: number;
 }
 
-export interface CartItemType {
-    id: string; // menu item id
-    name: string;
-    price: number;
-    image_url: string;
-    quantity: number;
-    customizations?: CartCustomization[];
-}
-
-export interface CartStore {
-    items: CartItem[];
-    addItem: (item: Omit<CartItem, "quantity">) => void;
-    removeItem: (id: string, customizations: CartCustomization[]) => void;
-    increaseQty: (id: string, customizations: CartCustomization[]) => void;
-    decreaseQty: (id: string, customizations: CartCustomization[]) => void;
-    clearCart: () => void;
+export interface PocketStore {
+    items: PlanItemType[];
+    addItem: (item: Omit<PlanItemType, "savedAt">) => void;
+    removeItem: (id: string) => void;
+    reorder: (fromIndex: number, toIndex: number) => void;
+    clearPocket: () => void;
     getTotalItems: () => number;
-    getTotalPrice: () => number;
+}
+
+export interface CycleDay {
+    date: string; // ISO date, yyyy-mm-dd
+    symptoms: string[];
+    mood?: string;
+    notes?: string;
+}
+
+export interface OnboardingAnswers {
+    name: string;
+    birthday: string; // ISO date
+    weightKg: number | null;
+    heightCm: number | null;
+    periodLengthDays: number | null;
+    cycleLengthDays: number | null;
+    lastPeriodStart: string | null; // ISO date
+}
+
+export interface TetherContact {
+    name: string;
+    phone: string;
+    relationship?: string;
+}
+
+export interface ChatMessage {
+    id: string;
+    role: "user" | "bloomy";
+    text: string;
+    createdAt: number;
+}
+
+export interface UserSettings {
+    notificationsEnabled: boolean;
+    tetherContact: TetherContact | null;
 }
 
 interface TabBarIconProps {
@@ -50,7 +80,7 @@ interface TabBarIconProps {
     title: string;
 }
 
-interface PaymentInfoStripeProps {
+interface InsightStripeProps {
     label: string;
     value: string;
     labelStyle?: string;
@@ -84,3 +114,4 @@ interface ProfileFieldProps {
     value: string;
     icon: ImageSourcePropType;
 }
+
