@@ -1,6 +1,7 @@
 import { getAuthErrorMessage } from "@/lib/authUtils";
 import { useSSO } from "@clerk/expo";
 import * as AuthSession from "expo-auth-session";
+import Constants from "expo-constants";
 import { router } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { useCallback, useEffect, useState } from "react";
@@ -31,14 +32,26 @@ export const useGoogleSSO = () => {
         if (isLoading) return;
         setIsLoading(true);
         setError("");
-        try {
-            const { createdSessionId, setActive } = await startSSOFlow({
-                strategy: "oauth_google",
-                redirectUrl: AuthSession.makeRedirectUri({
+
+        const redirectUrl = AuthSession.makeRedirectUri(
+            Constants.appOwnership === "expo"
+                ? { path: "oauth-native-callback" }
+                : {
                     scheme: "lutealshield",
-                    path: "/continue",
-                }),
+                    path: "oauth-native-callback",
+                },
+        );
+
+        try {
+            const { createdSessionId, setActive, authSessionResult } = await startSSOFlow({
+                strategy: "oauth_google",
+                redirectUrl,
             });
+
+            if (authSessionResult?.type === "cancel" || authSessionResult?.type === "dismiss") {
+                setError("Google sign-in was canceled.");
+                return;
+            }
 
             if (createdSessionId && setActive) {
                 await setActive({
@@ -52,6 +65,11 @@ export const useGoogleSSO = () => {
                     },
                 });
             } else {
+                console.warn("Google SSO finished without a session", {
+                    appOwnership: Constants.appOwnership,
+                    redirectUrl,
+                    authSessionResultType: authSessionResult?.type,
+                });
                 setError("Google sign-in didn't finish. Check that Google is enabled for this app, then try again.");
             }
         } catch (err) {
