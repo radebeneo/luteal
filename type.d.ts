@@ -1,3 +1,5 @@
+import type { TextInputProps } from "react-native";
+
 export type CyclePhase = "menstrual" | "follicular" | "ovulation" | "luteal";
 
 export interface ResourceArticle {
@@ -112,6 +114,15 @@ interface CustomInputProps {
     rightIcon?: React.ReactNode;
     onRightIconPress?: () => void;
     variant?: "underline" | "pill";
+    error?: string;
+    autoCapitalize?: TextInputProps["autoCapitalize"];
+    autoComplete?: TextInputProps["autoComplete"];
+    textContentType?: TextInputProps["textContentType"];
+    returnKeyType?: TextInputProps["returnKeyType"];
+    onSubmitEditing?: TextInputProps["onSubmitEditing"];
+    maxLength?: number;
+    accessibilityLabel?: string;
+    rightIconLabel?: string;
 }
 
 interface ProfileFieldProps {

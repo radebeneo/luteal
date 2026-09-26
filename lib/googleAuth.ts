@@ -1,8 +1,9 @@
+import { getAuthErrorMessage } from "@/lib/authUtils";
 import { useSSO } from "@clerk/expo";
 import * as AuthSession from "expo-auth-session";
 import { router } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -23,8 +24,13 @@ const useWarmUpBrowser = () => {
 export const useGoogleSSO = () => {
     useWarmUpBrowser();
     const { startSSOFlow } = useSSO();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const signInWithGoogle = useCallback(async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        setError("");
         try {
             const { createdSessionId, setActive } = await startSSOFlow({
                 strategy: "oauth_google",
@@ -46,13 +52,14 @@ export const useGoogleSSO = () => {
                     },
                 });
             } else {
-                // Missing requirements after SSO (e.g. legal acceptance) — no mockup yet, route to the form.
-                router.push("/(auth)/sign-up-form");
+                setError("Google sign-in didn't finish. Check that Google is enabled for this app, then try again.");
             }
         } catch (err) {
-            console.error("Google sign-in failed:", JSON.stringify(err, null, 2));
+            setError(getAuthErrorMessage(err, "Google sign-in isn't available right now. Please try again."));
+        } finally {
+            setIsLoading(false);
         }
-    }, [startSSOFlow]);
+    }, [isLoading, startSSOFlow]);
 
-    return { signInWithGoogle };
+    return { signInWithGoogle, isLoading, error };
 };

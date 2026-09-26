@@ -6,6 +6,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 interface SettingsStore extends UserSettings {
     setNotificationsEnabled: (enabled: boolean) => void;
     setTetherContact: (contact: UserSettings["tetherContact"]) => void;
+    reset: () => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -16,6 +17,7 @@ export const useSettingsStore = create<SettingsStore>()(
 
             setNotificationsEnabled: (enabled) => set({ notificationsEnabled: enabled }),
             setTetherContact: (contact) => set({ tetherContact: contact }),
+            reset: () => set({ notificationsEnabled: true, tetherContact: null }),
         }),
         {
             name: "luteal-shield.settings",

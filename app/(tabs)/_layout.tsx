@@ -1,10 +1,12 @@
+import { useAuth } from "@clerk/expo";
 import cn from "clsx";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
 
- import { images } from "@/constants";
+ import AuthLoading from "@/components/auth/AuthLoading";
+import { images } from "@/constants";
+import { useOnboardingStore } from "@/store/onboarding.store";
 import { TabBarIconProps } from "@/type";
-
 
 
 
@@ -18,6 +20,12 @@ const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
 )
 
 const TabLayout = () => {
+    const { isLoaded, isSignedIn } = useAuth();
+    const completed = useOnboardingStore((state) => state.completed);
+
+    if (!isLoaded) return <AuthLoading />;
+    if (!isSignedIn) return <Redirect href={"/(auth)/welcome" as import("expo-router").Href} />;
+    if (!completed) return <Redirect href="/onboarding" />;
 
     return (
             <Tabs screenOptions={{

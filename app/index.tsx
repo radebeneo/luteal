@@ -1,16 +1,16 @@
 import AuthLoading from "@/components/auth/AuthLoading";
 import { useOnboardingStore } from "@/store/onboarding.store";
 import { useAuth } from "@clerk/expo";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, type Href } from "expo-router";
 
-const AuthLayout = () => {
+const AppEntry = () => {
     const { isLoaded, isSignedIn } = useAuth();
     const completed = useOnboardingStore((state) => state.completed);
 
     if (!isLoaded) return <AuthLoading />;
-    if (isSignedIn) return <Redirect href={completed ? "/(tabs)" : "/onboarding"} />;
+    if (!isSignedIn) return <Redirect href={"/(auth)/welcome" as Href} />;
 
-    return <Stack screenOptions={{ headerShown: false }} />;
+    return <Redirect href={completed ? "/(tabs)" : "/onboarding"} />;
 };
 
-export default AuthLayout;
+export default AppEntry;

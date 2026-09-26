@@ -1,3 +1,4 @@
+import AccountDataBoundary from "@/components/auth/AccountDataBoundary";
 import { useOnboardingStore } from "@/store/onboarding.store";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
@@ -42,7 +43,6 @@ export default Sentry.wrap(function RootLayout() {
     "QuickSand-Light": require('../assets/fonts/Quicksand-Light.ttf'),
   })
 
-  const completed = useOnboardingStore((state) => state.completed);
   const [hasHydrated, setHasHydrated] = useState(useOnboardingStore.persist.hasHydrated());
 
   useEffect(() => {
@@ -62,12 +62,14 @@ export default Sentry.wrap(function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" redirect={!completed} />
-        <Stack.Screen name="onboarding" redirect={completed} />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
-      </Stack>
+      <AccountDataBoundary>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="onboarding" />
+          <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
+        </Stack>
+      </AccountDataBoundary>
     </ClerkProvider>
   );
 
