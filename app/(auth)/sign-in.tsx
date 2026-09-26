@@ -1,14 +1,13 @@
 import AuthLoading from "@/components/auth/AuthLoading";
-import { AuthDivider, AuthError, AuthPage } from "@/components/auth/AuthPage";
+import { AuthError, AuthPage } from "@/components/auth/AuthPage";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { getAuthErrorMessage, isValidEmailAddress } from "@/lib/authUtils";
-import { useGoogleSSO } from "@/lib/googleAuth";
 import { useSignIn } from "@clerk/expo";
-import { Feather, FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 type SignInMode = "credentials" | "reset-code" | "new-password" | "mfa";
 type MfaStrategy = "email_code" | "phone_code" | "totp" | "backup_code";
@@ -17,7 +16,6 @@ const supportedMfaStrategies: MfaStrategy[] = ["email_code", "phone_code", "totp
 
 const SignInScreen = () => {
     const { signIn, fetchStatus } = useSignIn();
-    const { signInWithGoogle, isLoading: isGoogleLoading, error: googleError } = useGoogleSSO();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [code, setCode] = useState("");
@@ -95,7 +93,7 @@ const SignInScreen = () => {
             await startMfa();
             return;
         }
-        setError("Your account needs another sign-in step. Please try again or use Google.");
+        setError("Your account needs another sign-in step. Please try again.");
     };
 
     const startPasswordReset = async () => {
@@ -236,18 +234,6 @@ const SignInScreen = () => {
                         <Text className="body-medium text-plum">Forgot password?</Text>
                     </TouchableOpacity>
                     <CustomButton title="Sign in" onPress={handleSignIn} isLoading={isLoading} />
-                    <AuthDivider />
-                    {googleError ? <AuthError message={googleError} /> : null}
-                    <TouchableOpacity
-                        onPress={signInWithGoogle}
-                        disabled={isGoogleLoading}
-                        className="h-12 flex-row items-center justify-center rounded-full border border-gray-200"
-                        accessibilityRole="button"
-                        accessibilityLabel="Continue with Google"
-                    >
-                        {isGoogleLoading ? <ActivityIndicator color="#3F2E45" /> : <FontAwesome name="google" size={18} color="#4285F4" />}
-                        <Text className="paragraph-medium ml-2 text-dark-100">Continue with Google</Text>
-                    </TouchableOpacity>
                 </>
             ) : null}
 

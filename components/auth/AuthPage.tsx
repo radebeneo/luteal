@@ -61,11 +61,3 @@ export const AuthError = ({ message }: { message: string }) => (
         <Text className="body-regular text-error">{message}</Text>
     </View>
 );
-
-export const AuthDivider = () => (
-    <View className="my-5 flex-row items-center">
-        <View className="h-px flex-1 bg-gray-200/40" />
-        <Text className="body-regular px-3 text-gray-200">or continue with</Text>
-        <View className="h-px flex-1 bg-gray-200/40" />
-    </View>
-);

@@ -1,18 +1,16 @@
 import AuthLoading from "@/components/auth/AuthLoading";
-import { AuthDivider, AuthError, AuthPage } from "@/components/auth/AuthPage";
+import { AuthError, AuthPage } from "@/components/auth/AuthPage";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { getAuthErrorMessage, isValidEmailAddress } from "@/lib/authUtils";
-import { useGoogleSSO } from "@/lib/googleAuth";
 import { useSignUp } from "@clerk/expo";
-import { Feather, FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const SignUpScreen = () => {
     const { signUp, fetchStatus } = useSignUp();
-    const { signInWithGoogle, isLoading: isGoogleLoading, error: googleError } = useGoogleSSO();
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -170,18 +168,6 @@ const SignUpScreen = () => {
                         />
                     </View>
                     <CustomButton title="Create account" onPress={handleCreateAccount} isLoading={isLoading} />
-                    <AuthDivider />
-                    {googleError ? <AuthError message={googleError} /> : null}
-                    <TouchableOpacity
-                        onPress={signInWithGoogle}
-                        disabled={isGoogleLoading}
-                        className="h-12 flex-row items-center justify-center rounded-full border border-gray-200"
-                        accessibilityRole="button"
-                        accessibilityLabel="Sign up with Google"
-                    >
-                        {isGoogleLoading ? <ActivityIndicator color="#3F2E45" /> : <FontAwesome name="google" size={18} color="#4285F4" />}
-                        <Text className="paragraph-medium ml-2 text-dark-100">Continue with Google</Text>
-                    </TouchableOpacity>
                 </>
             ) : (
                 <>
