@@ -132,8 +132,8 @@ const SignInScreen = () => {
     const submitNewPassword = async () => {
         if (!signIn || isLoading) return;
         setError("");
-        if (newPassword.length < 8) {
-            setFieldError("Use at least 8 characters for your new password.");
+        if (newPassword.length < 15) {
+            setFieldError("Use at least 15 characters for your new password.");
             return;
         }
         if (newPassword !== confirmPassword) {
@@ -264,7 +264,7 @@ const SignInScreen = () => {
                 <>
                     <CustomInput
                         label="New password"
-                        placeholder="At least 8 characters"
+                        placeholder="At least 15 characters"
                         variant="pill"
                         value={newPassword}
                         onChangeText={(value) => { setNewPassword(value); setFieldError(""); }}

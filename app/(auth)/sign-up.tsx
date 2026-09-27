@@ -44,7 +44,7 @@ const SignUpScreen = () => {
         const names = fullName.trim().split(/\s+/);
         if (fullName.trim().length < 2) nextErrors.fullName = "Enter your name to continue.";
         if (!isValidEmailAddress(email)) nextErrors.email = "Enter a valid email address.";
-        if (password.length < 8) nextErrors.password = "Use at least 8 characters.";
+        if (password.length < 15) nextErrors.password = "Use at least 15 characters.";
         setFieldErrors(nextErrors);
         setError("");
         if (Object.keys(nextErrors).length) return;
@@ -152,7 +152,7 @@ const SignUpScreen = () => {
                     <View className="mb-5">
                         <CustomInput
                             label="Password"
-                            placeholder="At least 8 characters"
+                            placeholder="At least 15 characters"
                             variant="pill"
                             value={password}
                             onChangeText={(value) => { setPassword(value); setFieldErrors((current) => ({ ...current, password: "" })); }}
