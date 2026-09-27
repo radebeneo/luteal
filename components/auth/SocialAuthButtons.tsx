@@ -23,7 +23,7 @@ const SocialAuthButtons = ({ mode, destination, disabled = false }: SocialAuthBu
                 <View className="h-px flex-1 bg-gray-100" />
             </View>
             {error ? <AuthError message={error} /> : null}
-            <View className="gap-3">
+            <View className={mode === "sign-up" ? "flex-row justify-center gap-6" : "gap-3"}>
                 {providers.map((provider) => {
                     const label = provider === "google" ? "Google" : "Apple";
                     const isLoading = loadingProvider === provider;
@@ -32,7 +32,9 @@ const SocialAuthButtons = ({ mode, destination, disabled = false }: SocialAuthBu
                             key={provider}
                             onPress={() => signInWithSocial(provider)}
                             disabled={disabled || loadingProvider !== null}
-                            className="h-14 flex-row items-center justify-center rounded-full border border-gray-100 bg-white"
+                            className={mode === "sign-up"
+                                ? "h-12 w-12 items-center justify-center rounded-xl border border-gray-100 bg-white"
+                                : "h-14 flex-row items-center justify-center rounded-full border border-gray-100 bg-white"}
                             accessibilityRole="button"
                             accessibilityLabel={`${mode === "sign-in" ? "Sign in" : "Sign up"} with ${label}`}
                         >
@@ -41,7 +43,7 @@ const SocialAuthButtons = ({ mode, destination, disabled = false }: SocialAuthBu
                             ) : (
                                 <>
                                     <FontAwesome name={provider} size={18} color={provider === "apple" ? "#111111" : "#4285F4"} />
-                                    <Text className="body-medium ml-2 text-dark-100">Continue with {label}</Text>
+                                    {mode === "sign-in" ? <Text className="body-medium ml-2 text-dark-100">Continue with {label}</Text> : null}
                                 </>
                             )}
                         </TouchableOpacity>

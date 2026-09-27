@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import type { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -43,11 +44,16 @@ export const AuthPage = ({
                 keyboardShouldPersistTaps="handled"
             >
                 <View className="w-full rounded-3xl bg-white p-6 shadow-md shadow-black/10">
-                    <View className="mb-5 size-11 items-center justify-center rounded-2xl bg-blush-100">
-                        <Feather name="heart" size={21} color="#3F2E45" />
+                    <View className="mb-6 items-center">
+                        <Image
+                            source={require("@/assets/images/screen-three-deco.svg")}
+                            style={{ width: 96, height: 111 }}
+                            contentFit="contain"
+                            accessibilityLabel="The droplet mascot holding up a menstrual calendar"
+                        />
+                        <Text className="font-quicksand-bold text-center text-[28px] leading-9 text-dark-100">{title}</Text>
+                        <Text className="body-regular mb-6 mt-1 text-center text-gray-200">{subtitle}</Text>
                     </View>
-                    <Text className="font-quicksand-bold text-[28px] leading-9 text-dark-100">{title}</Text>
-                    <Text className="body-regular mb-6 mt-1 text-gray-200">{subtitle}</Text>
                     {children}
                 </View>
                 {footer ? <View className="mt-5 items-center">{footer}</View> : null}

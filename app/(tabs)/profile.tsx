@@ -3,6 +3,7 @@ import CustomHeader from "@/components/CustomHeader";
 import { useOnboardingStore } from "@/store/onboarding.store";
 import { usePocketStore } from "@/store/pocket.store";
 import { useSettingsStore } from "@/store/settings.store";
+import { useAuth } from "@clerk/expo";
 import { router } from "expo-router";
 import { ScrollView, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,11 +19,17 @@ const Profile = () => {
     const { answers, reset: resetOnboarding } = useOnboardingStore();
     const { clearPocket } = usePocketStore();
     const { notificationsEnabled, setNotificationsEnabled, tetherContact } = useSettingsStore();
+    const { signOut } = useAuth();
 
     const handleReset = () => {
         clearPocket();
         resetOnboarding();
         router.replace("/onboarding/name");
+    };
+
+    const handleLogout = async () => {
+        await signOut();
+        router.replace("/(auth)/welcome");
     };
 
     return (
@@ -57,6 +64,12 @@ const Profile = () => {
                     style="!bg-transparent border border-error"
                     textStyle="!text-error"
                     onPress={handleReset}
+                />
+                <CustomButton
+                    title="Log out"
+                    style="!bg-transparent border border-gray-200 mt-3"
+                    textStyle="!text-dark-100"
+                    onPress={handleLogout}
                 />
             </ScrollView>
         </SafeAreaView>
