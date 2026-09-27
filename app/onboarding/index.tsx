@@ -1,12 +1,9 @@
 import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
-import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
 const OnboardingSplash = () => {
-    const handleSkip = useCompleteOnboarding();
-
     const handleNext = () => {
         router.push("/onboarding/step-2");
     };
@@ -15,7 +12,6 @@ const OnboardingSplash = () => {
         <OnboardingSlide
             activeIndex={0}
             totalSteps={3}
-            onSkip={handleSkip}
             onNext={handleNext}
             illustration={
                 <View className="size-40 rounded-full bg-primary/20 items-center justify-center">

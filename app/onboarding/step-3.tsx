@@ -1,7 +1,6 @@
 import DropletIcon from "@/components/onboarding/DropletIcon";
 import DropletMascot from "@/components/onboarding/DropletMascot";
 import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
-import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
 import { router } from "expo-router";
 import { Dimensions, Text, View } from "react-native";
 
@@ -17,8 +16,6 @@ const DROPLETS = [
 ] as const;
 
 const OnboardingStepThree = () => {
-    const handleSkip = useCompleteOnboarding();
-
     const handleNext = () => {
         router.push("/onboarding/step-4");
     };
@@ -27,7 +24,6 @@ const OnboardingStepThree = () => {
         <OnboardingSlide
             activeIndex={1}
             totalSteps={3}
-            onSkip={handleSkip}
             onNext={handleNext}
             decorations={
                 <View

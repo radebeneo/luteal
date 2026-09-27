@@ -1,6 +1,5 @@
 import NextButton from "@/components/onboarding/NextButton";
 import Pagination from "@/components/onboarding/Pagination";
-import SkipLink from "@/components/onboarding/SkipLink";
 import { LinearGradient } from "expo-linear-gradient";
 import { ReactNode } from "react";
 import { View } from "react-native";
@@ -12,10 +11,8 @@ type OnboardingSlideProps = {
     subtitle?: ReactNode;
     activeIndex: number;
     totalSteps: number;
-    onSkip: () => void;
     onNext: () => void;
     decorations?: ReactNode;
-    showSkip?: boolean;
 };
 
 const OnboardingSlide = ({
@@ -24,18 +21,14 @@ const OnboardingSlide = ({
     subtitle,
     activeIndex,
     totalSteps,
-    onSkip,
     onNext,
     decorations,
-    showSkip = true,
 }: OnboardingSlideProps) => {
     return (
         <View className="flex-1">
             <LinearGradient colors={["#FFFFFF", "#FCE7ED"]} className="absolute inset-0" />
             {decorations}
             <SafeAreaView className="flex-1">
-                {showSkip ? <SkipLink onPress={onSkip} /> : null}
-
                 <View className="flex-1 items-center justify-center pt-4">
                     {illustration}
 

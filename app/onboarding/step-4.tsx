@@ -7,19 +7,17 @@ import { Dimensions, Text, View } from "react-native";
 const MASCOT_SIZE = Dimensions.get("window").width * 0.84;
 
 const OnboardingStepFour = () => {
-    const handleSkip = useCompleteOnboarding();
+    const handleComplete = useCompleteOnboarding();
 
     const handleNext = () => {
-        handleSkip();
+        handleComplete();
     };
 
     return (
         <OnboardingSlide
             activeIndex={2}
             totalSteps={3}
-            onSkip={handleSkip}
             onNext={handleNext}
-            showSkip={false}
             illustration={
                 <View
                     className="items-center justify-center"
