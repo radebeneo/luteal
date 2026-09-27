@@ -2,8 +2,20 @@ import { usePocketStore } from "@/store/pocket.store";
 import { ResourceArticle } from "@/type";
 import { Platform, Text, TouchableOpacity } from "react-native";
 
-const ResourceCard = ({ item: { $id, name, description, tags } }: { item: ResourceArticle }) => {
-    const { addItem } = usePocketStore();
+const ResourceCard = ({
+    item: { $id, name, description, tags },
+    onSaved,
+}: {
+    item: ResourceArticle;
+    onSaved?: (wasAlreadySaved: boolean) => void;
+}) => {
+    const addItem = usePocketStore((state) => state.addItem);
+    const isSaved = usePocketStore((state) => state.items.some((savedItem) => savedItem.id === $id));
+
+    const saveToPocket = () => {
+        addItem({ id: $id, title: name, body: description, tags });
+        onSaved?.(isSaved);
+    };
 
     return (
         <TouchableOpacity
@@ -17,7 +29,7 @@ const ResourceCard = ({ item: { $id, name, description, tags } }: { item: Resour
                 {description}
             </Text>
             <TouchableOpacity
-                onPress={() => addItem({ id: $id, title: name, body: description, tags })}
+                onPress={saveToPocket}
             >
                 <Text className="paragraph-bold text-primary">Save to Pocket +</Text>
             </TouchableOpacity>

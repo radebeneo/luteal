@@ -6,6 +6,7 @@ import dummyData from "@/lib/data";
 import { Category, ResourceArticle } from "@/type";
 import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,6 +20,7 @@ const resources: ResourceArticle[] = dummyData.resources.map((item, index) => ({
 }));
 
 const Search = () => {
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
 
     const {category, query} = useLocalSearchParams<{query?: string, category?: string}> ()
     const data = resources.filter((item) =>
@@ -26,9 +28,16 @@ const Search = () => {
         (!query || item.name.toLowerCase().includes(query.toLowerCase()))
     );
 
+    useEffect(() => {
+        if (!toastMessage) return;
+
+        const timeout = setTimeout(() => setToastMessage(null), 2200);
+        return () => clearTimeout(timeout);
+    }, [toastMessage]);
+
 
     return (
-        <SafeAreaView className="bg-white h-full">
+        <SafeAreaView className="bg-white flex-1">
 
             <FlatList
                 data={data}
@@ -38,7 +47,12 @@ const Search = () => {
 
                     return (
                         <View className={cn('flex-1 max-w-[48%]', !isFirstRightColItem ? 'mt-10' : 'mt-0')}>
-                            <ResourceCard item={item} />
+                            <ResourceCard
+                                item={item}
+                                onSaved={(wasAlreadySaved) =>
+                                    setToastMessage(wasAlreadySaved ? "Already in your Pocket" : "Saved to your Pocket")
+                                }
+                            />
                         </View>
                     )
                 }}
@@ -65,7 +79,17 @@ const Search = () => {
 
             />
 
-
+            {toastMessage && (
+                <View
+                    className="absolute left-5 right-5 rounded-xl bg-dark-100 px-5 py-3"
+                    style={{ bottom: 132, zIndex: 10, elevation: 10 }}
+                    pointerEvents="none"
+                    accessibilityRole="alert"
+                    accessibilityLiveRegion="polite"
+                >
+                    <Text className="paragraph-semibold text-center text-white">{toastMessage}</Text>
+                </View>
+            )}
 
         </SafeAreaView>
     )
