@@ -1,5 +1,6 @@
 import AuthLoading from "@/components/auth/AuthLoading";
 import { AuthError, AuthPage } from "@/components/auth/AuthPage";
+import SocialAuthButtons from "@/components/auth/SocialAuthButtons";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { getAuthErrorMessage, isValidEmailAddress } from "@/lib/authUtils";
@@ -234,6 +235,7 @@ const SignInScreen = () => {
                         <Text className="body-medium text-plum">Forgot password?</Text>
                     </TouchableOpacity>
                     <CustomButton title="Sign in" onPress={handleSignIn} isLoading={isLoading} />
+                    <SocialAuthButtons mode="sign-in" destination="/(tabs)" disabled={isLoading} variant="icon" />
                 </>
             ) : null}
 
