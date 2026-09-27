@@ -1,8 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 
-// Tracks whether the user has seen the marketing splash carousel (app/onboarding).
+// Tracks whether the user has seen the marketing splash carousel (app/onboarding)
+// for the current app session. Intentionally not persisted so the carousel is
+// shown again before the auth screens on every fresh launch (and after sign-out).
 // Profile data (name, cycle details, etc.) lives in store/profileSetup.store.ts.
 interface OnboardingStore {
     completed: boolean;
@@ -10,18 +10,10 @@ interface OnboardingStore {
     reset: () => void;
 }
 
-export const useOnboardingStore = create<OnboardingStore>()(
-    persist(
-        (set) => ({
-            completed: false,
+export const useOnboardingStore = create<OnboardingStore>()((set) => ({
+    completed: false,
 
-            complete: () => set({ completed: true }),
+    complete: () => set({ completed: true }),
 
-            reset: () => set({ completed: false }),
-        }),
-        {
-            name: "luteal-shield.onboarding",
-            storage: createJSONStorage(() => AsyncStorage),
-        }
-    )
-);
+    reset: () => set({ completed: false }),
+}));

@@ -1,5 +1,4 @@
 import AccountDataBoundary from "@/components/auth/AccountDataBoundary";
-import { useOnboardingStore } from "@/store/onboarding.store";
 import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
@@ -53,23 +52,17 @@ export default Sentry.wrap(function RootLayout() {
     "Fredoka-Bold": require('../assets/fonts/Fredoka-Bold.ttf'),
   })
 
-  const [hasHydrated, setHasHydrated] = useState(
-    useOnboardingStore.persist.hasHydrated() && useProfileSetupStore.persist.hasHydrated()
-  );
+  const [hasHydrated, setHasHydrated] = useState(useProfileSetupStore.persist.hasHydrated());
 
   useEffect(() => {
-    if (useOnboardingStore.persist.hasHydrated() && useProfileSetupStore.persist.hasHydrated()) {
+    if (useProfileSetupStore.persist.hasHydrated()) {
       setHasHydrated(true);
       return;
     }
-    const unsubOnboarding = useOnboardingStore.persist.onFinishHydration(() => {
-      if (useProfileSetupStore.persist.hasHydrated()) setHasHydrated(true);
-    });
     const unsubProfileSetup = useProfileSetupStore.persist.onFinishHydration(() => {
-      if (useOnboardingStore.persist.hasHydrated()) setHasHydrated(true);
+      setHasHydrated(true);
     });
     return () => {
-      unsubOnboarding();
       unsubProfileSetup();
     };
   }, []);
