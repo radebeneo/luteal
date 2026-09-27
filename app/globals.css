@@ -110,7 +110,7 @@
     }
 
     .base-bold {
-        @apply text-lg font-quicksand-bold !important;
+        @apply text-lg font-fredoka-bold !important;
     }
 
     .base-semibold {

@@ -32,7 +32,7 @@ const OnboardingStepFour = () => {
                 </View>
             }
             title={
-                <Text className="text-center text-[28px] leading-[32px] font-quicksand-bold text-[#1A1A1A]">
+                <Text className="text-center text-[28px] leading-[32px] font-fredoka-bold text-[#1A1A1A]">
                     Stay Informed,{"\n"}Stay Empowered
                 </Text>
             }
