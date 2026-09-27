@@ -7,10 +7,11 @@ const AppEntry = () => {
     const { isLoaded, isSignedIn } = useAuth();
     const completed = useOnboardingStore((state) => state.completed);
 
+    if (!completed) return <Redirect href="/onboarding" />;
     if (!isLoaded) return <AuthLoading />;
     if (!isSignedIn) return <Redirect href={"/(auth)/welcome" as Href} />;
 
-    return <Redirect href={completed ? "/(tabs)" : "/onboarding"} />;
+    return <Redirect href="/(tabs)" />;
 };
 
 export default AppEntry;

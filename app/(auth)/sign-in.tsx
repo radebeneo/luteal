@@ -76,8 +76,8 @@ const SignInScreen = () => {
             return;
         }
         setFieldError("");
-        if (!password) {
-            setFieldError("Enter your password.");
+        if (password.length < 8) {
+            setFieldError("Use at least 8 characters.");
             return;
         }
         const { error: signInError } = await signIn.password({ emailAddress: email.trim(), password });

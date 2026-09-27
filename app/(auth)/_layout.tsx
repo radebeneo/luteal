@@ -7,8 +7,9 @@ const AuthLayout = () => {
     const { isLoaded, isSignedIn } = useAuth();
     const completed = useOnboardingStore((state) => state.completed);
 
+    if (!completed) return <Redirect href="/onboarding" />;
     if (!isLoaded) return <AuthLoading />;
-    if (isSignedIn) return <Redirect href={completed ? "/(tabs)" : "/onboarding"} />;
+    if (isSignedIn) return <Redirect href="/(tabs)" />;
 
     return <Stack screenOptions={{ headerShown: false }} />;
 };
