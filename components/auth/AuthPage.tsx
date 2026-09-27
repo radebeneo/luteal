@@ -52,7 +52,7 @@ export const AuthPage = ({
                             contentFit="contain"
                             accessibilityLabel="The droplet mascot holding up a menstrual calendar"
                         />
-                        <Text className="font-quicksand-bold text-center text-[28px] leading-9 text-dark-100">{title}</Text>
+                        <Text className="font-fredoka-bold text-center text-[28px] leading-9 text-dark-100">{title}</Text>
                         <Text className="body-regular mb-6 mt-1 text-center text-gray-200">{subtitle}</Text>
                     </View>
                     {children}

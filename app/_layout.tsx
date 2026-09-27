@@ -46,6 +46,11 @@ export default Sentry.wrap(function RootLayout() {
     "QuickSand-Regular": require('../assets/fonts/Quicksand-Regular.ttf'),
     "QuickSand-SemiBold": require('../assets/fonts/Quicksand-SemiBold.ttf'),
     "QuickSand-Light": require('../assets/fonts/Quicksand-Light.ttf'),
+    "Fredoka-Light": require('../assets/fonts/Fredoka-Light.ttf'),
+    "Fredoka-Regular": require('../assets/fonts/Fredoka-Regular.ttf'),
+    "Fredoka-Medium": require('../assets/fonts/Fredoka-Medium.ttf'),
+    "Fredoka-SemiBold": require('../assets/fonts/Fredoka-SemiBold.ttf'),
+    "Fredoka-Bold": require('../assets/fonts/Fredoka-Bold.ttf'),
   })
 
   const [hasHydrated, setHasHydrated] = useState(

@@ -53,7 +53,7 @@ const OnboardingStepThree = () => {
             }
             illustration={<DropletMascot size={MASCOT_SIZE} />}
             title={
-                <Text className="text-center text-[28px] leading-[32px] font-quicksand-bold text-[#1A1A1A]">
+                <Text className="text-center text-[28px] leading-[32px] font-fredoka-bold text-[#1A1A1A]">
                     Effortless Tracking,{"\n"}All in One Place
                 </Text>
             }
