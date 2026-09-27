@@ -52,14 +52,40 @@ npm install
 
 ### Environment variables
 
-Create a `.env` file (or configure via EAS) with:
+Add the app URL to the root `.env` file. Use `localhost` for web/iOS Simulator,
+`10.0.2.2` for the Android emulator, or your computer's LAN IP for a physical
+phone on the same Wi-Fi network:
 
 ```bash
-EXPO_PUBLIC_BLOOMY_API_URL=https://your-backend.example.com/api/bloomy/chat
+EXPO_PUBLIC_BLOOMY_API_URL=http://localhost:3001/api/bloomy/chat
 ```
 
-Bloomy chat calls this endpoint and shows a friendly fallback message if it's
-missing or unreachable — no Gemini key ever lives in the client.
+Set up the local Gemini backend in `server/.env`:
+
+```powershell
+Copy-Item server/.env.example server/.env
+```
+
+Replace the placeholder key in `server/.env` with a key from
+[Google AI Studio](https://aistudio.google.com/app/apikey).
+Keep it in `server/.env`; never put it in the app's root `.env` or an
+`EXPO_PUBLIC_` variable. Start the backend in one terminal:
+
+```bash
+npm run server
+```
+
+Then start Expo in another terminal. Restart Expo after changing the root
+`.env`. The backend listens on port `3001` and accepts chat requests at
+`/api/bloomy/chat`.
+
+Bloomy chat shows a friendly fallback message if the URL is missing or the
+backend is unreachable.
+
+Each request includes `message` (the new user message) and `history` (earlier
+turns as `{ "role": "user" | "assistant", "text": "..." }`). The endpoint
+should use that history to keep replies aware of the conversation and return a
+JSON object with a string `reply` field.
 
 ### Running the App
 

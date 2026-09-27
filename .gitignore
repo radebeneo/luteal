@@ -37,6 +37,7 @@ yarn-error.*
 # local env files (contains Clerk secret key — never commit)
 .env
 .env*.local
+server/.env
 
 # typescript
 *.tsbuildinfo
