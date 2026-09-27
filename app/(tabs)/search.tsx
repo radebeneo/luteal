@@ -6,8 +6,9 @@ import dummyData from "@/lib/data";
 import { Category, ResourceArticle } from "@/type";
 import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
+import * as Linking from "expo-linking";
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const categories: Category[] = dummyData.categories.map((category) => ({
@@ -18,6 +19,61 @@ const resources: ResourceArticle[] = dummyData.resources.map((item, index) => ({
     ...item,
     $id: `resource-${index + 1}`,
 }));
+
+const openSupportLink = (url: string) => {
+    Linking.openURL(url);
+};
+
+const CrisisSupport = () => (
+    <View className="rounded-3xl bg-plum px-5 py-6">
+        <Text className="small-bold uppercase text-white/75">Crisis support</Text>
+        <Text className="h2-bold mt-1 text-white">Need help right now?</Text>
+        <Text className="paragraph-medium mt-2 text-white/85">
+            You deserve immediate support. Choose the option that feels safest.
+        </Text>
+
+        <View className="mt-5 gap-3">
+            <Pressable
+                accessibilityLabel="Call emergency services on 112"
+                accessibilityRole="button"
+                className="flex-row items-center justify-between rounded-2xl bg-white px-4 py-4"
+                onPress={() => openSupportLink("tel:112")}
+            >
+                <View className="flex-1 pr-3">
+                    <Text className="paragraph-bold text-dark-100">Immediate danger</Text>
+                    <Text className="small-medium mt-1 text-gray-200">Emergency services · 112</Text>
+                </View>
+                <Text className="paragraph-bold text-plum">Call 112</Text>
+            </Pressable>
+
+            <Pressable
+                accessibilityLabel="Call SADAG Suicide Crisis Line on 0800 567 567"
+                accessibilityRole="button"
+                className="flex-row items-center justify-between rounded-2xl border border-white/30 px-4 py-4"
+                onPress={() => openSupportLink("tel:0800567567")}
+            >
+                <View className="flex-1 pr-3">
+                    <Text className="paragraph-bold text-white">SADAG Suicide Crisis Line</Text>
+                    <Text className="small-medium mt-1 text-white/75">South Africa · 0800 567 567</Text>
+                </View>
+                <Text className="paragraph-bold text-white">Call SADAG</Text>
+            </Pressable>
+
+            <Pressable
+                accessibilityLabel="Open IAPMD PMDD support"
+                accessibilityRole="button"
+                className="flex-row items-center justify-between rounded-2xl border border-white/30 px-4 py-4"
+                onPress={() => openSupportLink("https://iapmd.org")}
+            >
+                <View className="flex-1 pr-3">
+                    <Text className="paragraph-bold text-white">IAPMD PMDD support</Text>
+                    <Text className="small-medium mt-1 text-white/75">Peer support and crisis resources</Text>
+                </View>
+                <Text className="paragraph-bold text-white">Visit IAPMD</Text>
+            </Pressable>
+        </View>
+    </View>
+);
 
 const Search = () => {
     const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -73,6 +129,7 @@ const Search = () => {
                         </View>
                         <SearchBar/>
                         <FilterComponent categories={categories}/>
+                        <CrisisSupport />
                     </View>
                 )}
                 ListEmptyComponent={() => <Text className="text-center">No results found</Text>}
