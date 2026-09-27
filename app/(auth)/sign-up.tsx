@@ -1,5 +1,6 @@
 import AuthLoading from "@/components/auth/AuthLoading";
 import { AuthError, AuthPage } from "@/components/auth/AuthPage";
+import SocialAuthButtons from "@/components/auth/SocialAuthButtons";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { getAuthErrorMessage, isValidEmailAddress } from "@/lib/authUtils";
@@ -168,6 +169,7 @@ const SignUpScreen = () => {
                         />
                     </View>
                     <CustomButton title="Create account" onPress={handleCreateAccount} isLoading={isLoading} />
+                    <SocialAuthButtons mode="sign-up" destination="/onboarding" disabled={isLoading} />
                 </>
             ) : (
                 <>
