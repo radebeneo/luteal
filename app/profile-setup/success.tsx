@@ -1,4 +1,5 @@
 import CustomButton from "@/components/CustomButton";
+import ProfileSetupDecoration from "@/components/profile-setup/ProfileSetupDecoration";
 import { images } from "@/constants";
 import { useCompleteProfileSetup } from "@/lib/useCompleteProfileSetup";
 import { Image, Text, View } from "react-native";
@@ -18,6 +19,7 @@ const ProfileSetupSuccess = () => {
                     </View>
 
                     <Text className="h3-bold text-dark-100 mb-2">Setup Complete</Text>
+                    <ProfileSetupDecoration />
                     <Text className="body-regular text-gray-200 text-center mb-6">
                         Your personal calendar is ready.
                     </Text>

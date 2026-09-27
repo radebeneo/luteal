@@ -42,6 +42,7 @@ export const AuthPage = ({
                 className="flex-1"
                 contentContainerStyle={{ flexGrow: 1, justifyContent: "center", paddingHorizontal: 20, paddingVertical: 20 }}
                 keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="on-drag"
             >
                 <View className="w-full rounded-3xl bg-white p-6 shadow-md shadow-black/10">
                     <View className="mb-6 items-center">

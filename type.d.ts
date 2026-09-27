@@ -51,10 +51,13 @@ export interface CycleDay {
 export interface ProfileSetupAnswers {
     name: string;
     birthday: string; // ISO date
+    shieldAudience: "pmdd" | "suspected-pmdd" | "loved-one" | "explore" | null;
+    symptoms: string[];
     weightKg: number | null;
     heightCm: number | null;
     periodLengthDays: number | null;
     cycleLengthDays: number | null;
+    lutealLengthDays: number | null;
     lastPeriodStart: string | null; // ISO date
 }
 

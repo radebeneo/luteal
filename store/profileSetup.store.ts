@@ -17,10 +17,13 @@ interface ProfileSetupStore {
 const initialAnswers: ProfileSetupAnswers = {
     name: "",
     birthday: "",
+    shieldAudience: null,
+    symptoms: [],
     weightKg: null,
     heightCm: null,
     periodLengthDays: null,
     cycleLengthDays: null,
+    lutealLengthDays: null,
     lastPeriodStart: null,
 };
 

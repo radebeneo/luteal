@@ -41,6 +41,8 @@ const BloomyScreen = () => {
                     data={messages}
                     keyExtractor={(item) => item.id}
                     contentContainerClassName="px-5 pb-5 gap-y-3"
+                    keyboardShouldPersistTaps="handled"
+                    keyboardDismissMode="interactive"
                     ListEmptyComponent={() => (
                         <Text className="text-center body-regular text-gray-200 mt-10">
                             Say hi to Bloomy — your AI companion for the hard days.

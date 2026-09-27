@@ -46,8 +46,6 @@ export const cyclePhases: {
 export const onboardingSteps = [
     "name",
     "birthday",
-    "weight",
-    "height",
     "period-length",
     "cycle-length",
     "last-period",
