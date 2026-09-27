@@ -1,43 +1,23 @@
-import { OnboardingAnswers } from "@/type";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+// Tracks whether the user has seen the marketing splash carousel (app/onboarding).
+// Profile data (name, cycle details, etc.) lives in store/profileSetup.store.ts.
 interface OnboardingStore {
     completed: boolean;
-    answers: OnboardingAnswers;
-    setAnswer: <K extends keyof OnboardingAnswers>(
-        key: K,
-        value: OnboardingAnswers[K]
-    ) => void;
     complete: () => void;
     reset: () => void;
 }
-
-const initialAnswers: OnboardingAnswers = {
-    name: "",
-    birthday: "",
-    weightKg: null,
-    heightCm: null,
-    periodLengthDays: null,
-    cycleLengthDays: null,
-    lastPeriodStart: null,
-};
 
 export const useOnboardingStore = create<OnboardingStore>()(
     persist(
         (set) => ({
             completed: false,
-            answers: initialAnswers,
-
-            setAnswer: (key, value) =>
-                set((state) => ({
-                    answers: { ...state.answers, [key]: value },
-                })),
 
             complete: () => set({ completed: true }),
 
-            reset: () => set({ completed: false, answers: initialAnswers }),
+            reset: () => set({ completed: false }),
         }),
         {
             name: "luteal-shield.onboarding",

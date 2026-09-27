@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const PreparingStep = () => {
+const ProfileSetupPreparing = () => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
@@ -11,7 +11,7 @@ const PreparingStep = () => {
             setProgress((p) => {
                 if (p >= 100) {
                     clearInterval(interval);
-                    router.replace("/onboarding/success");
+                    router.replace("/profile-setup/success");
                     return p;
                 }
                 return p + 10;
@@ -43,4 +43,5 @@ const PreparingStep = () => {
         </SafeAreaView>
     );
 };
-export default PreparingStep;
+
+export default ProfileSetupPreparing;

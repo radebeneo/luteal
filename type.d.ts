@@ -48,7 +48,7 @@ export interface CycleDay {
     notes?: string;
 }
 
-export interface OnboardingAnswers {
+export interface ProfileSetupAnswers {
     name: string;
     birthday: string; // ISO date
     weightKg: number | null;

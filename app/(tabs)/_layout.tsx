@@ -6,6 +6,7 @@ import { Image, Text, View } from "react-native";
  import AuthLoading from "@/components/auth/AuthLoading";
 import { images } from "@/constants";
 import { useOnboardingStore } from "@/store/onboarding.store";
+import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { TabBarIconProps } from "@/type";
 
 
@@ -21,11 +22,13 @@ const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
 
 const TabLayout = () => {
     const { isLoaded, isSignedIn } = useAuth();
-    const completed = useOnboardingStore((state) => state.completed);
+    const marketingCompleted = useOnboardingStore((state) => state.completed);
+    const profileSetupCompleted = useProfileSetupStore((state) => state.completed);
 
     if (!isLoaded) return <AuthLoading />;
     if (!isSignedIn) return <Redirect href={"/(auth)/welcome" as import("expo-router").Href} />;
-    if (!completed) return <Redirect href="/onboarding" />;
+    if (!marketingCompleted) return <Redirect href="/onboarding" />;
+    if (!profileSetupCompleted) return <Redirect href="/profile-setup" />;
 
     return (
             <Tabs screenOptions={{

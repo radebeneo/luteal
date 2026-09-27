@@ -1,11 +1,11 @@
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
-import { useCompleteOnboarding } from "@/lib/useCompleteOnboarding";
+import { useCompleteProfileSetup } from "@/lib/useCompleteProfileSetup";
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const SuccessStep = () => {
-    const completeOnboarding = useCompleteOnboarding();
+const ProfileSetupSuccess = () => {
+    const completeProfileSetup = useCompleteProfileSetup();
 
     return (
         <SafeAreaView className="flex-1 bg-blush-100">
@@ -22,13 +22,11 @@ const SuccessStep = () => {
                         Your personal calendar is ready.
                     </Text>
 
-                    <CustomButton
-                        title="Back to Home"
-                        onPress={completeOnboarding}
-                    />
+                    <CustomButton title="Back to Home" onPress={completeProfileSetup} />
                 </View>
             </View>
         </SafeAreaView>
     );
 };
-export default SuccessStep;
+
+export default ProfileSetupSuccess;

@@ -3,6 +3,7 @@ import { useChatStore } from "@/store/chat.store";
 import { useCycleStore } from "@/store/cycle.store";
 import { useOnboardingStore } from "@/store/onboarding.store";
 import { usePocketStore } from "@/store/pocket.store";
+import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { useSettingsStore } from "@/store/settings.store";
 import { useAuth } from "@clerk/expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,6 +14,7 @@ import { Text, View } from "react-native";
 const accountOwnerKey = "luteal-shield.account-owner";
 const persistedKeys = [
     "luteal-shield.onboarding",
+    "luteal-shield.profile-setup",
     "luteal-shield.cycle",
     "luteal-shield.pocket",
     "luteal-shield.settings",
@@ -59,6 +61,7 @@ const AccountDataBoundary = ({ children }: { children: ReactNode }) => {
 
                     await Promise.all([
                         useOnboardingStore.persist.rehydrate(),
+                        useProfileSetupStore.persist.rehydrate(),
                         useCycleStore.persist.rehydrate(),
                         usePocketStore.persist.rehydrate(),
                         useSettingsStore.persist.rehydrate(),
@@ -67,10 +70,11 @@ const AccountDataBoundary = ({ children }: { children: ReactNode }) => {
 
                     const accountDataKeys = new Set(accountData.flatMap(([key, value]) => value === null ? [] : [key]));
                     if (!accountDataKeys.has(accountKeys[0])) useOnboardingStore.getState().reset();
-                    if (!accountDataKeys.has(accountKeys[1])) useCycleStore.getState().clearLog();
-                    if (!accountDataKeys.has(accountKeys[2])) usePocketStore.getState().clearPocket();
-                    if (!accountDataKeys.has(accountKeys[3])) useSettingsStore.getState().reset();
-                    if (!accountDataKeys.has(accountKeys[4])) useChatStore.getState().clearChat();
+                    if (!accountDataKeys.has(accountKeys[1])) useProfileSetupStore.getState().reset();
+                    if (!accountDataKeys.has(accountKeys[2])) useCycleStore.getState().clearLog();
+                    if (!accountDataKeys.has(accountKeys[3])) usePocketStore.getState().clearPocket();
+                    if (!accountDataKeys.has(accountKeys[4])) useSettingsStore.getState().reset();
+                    if (!accountDataKeys.has(accountKeys[5])) useChatStore.getState().clearChat();
                 }
 
                 await AsyncStorage.setItem(accountOwnerKey, userId);

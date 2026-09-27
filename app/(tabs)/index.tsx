@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import BloomyButton from "@/components/BloomyButton";
 import { cyclePhases } from "@/constants";
-import { useOnboardingStore } from "@/store/onboarding.store";
+import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { CyclePhase } from "@/type";
 import '../globals.css';
 
@@ -18,7 +18,7 @@ function getCyclePhase(dayInCycle: number, cycleLength: number, periodLength: nu
 }
 
 export default function Index() {
-    const { answers } = useOnboardingStore();
+    const { answers } = useProfileSetupStore();
 
     const { dayInCycle, cycleLength, phase } = useMemo(() => {
         const cycleLength = answers.cycleLengthDays ?? 28;

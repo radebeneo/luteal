@@ -1,13 +1,12 @@
 import { useOnboardingStore } from "@/store/onboarding.store";
-import { useAuth } from "@clerk/expo";
 import { router } from "expo-router";
 
+// Marks the marketing splash carousel as seen; root index.tsx decides the next screen.
 export const useCompleteOnboarding = () => {
     const complete = useOnboardingStore((state) => state.complete);
-    const { isSignedIn } = useAuth();
 
     return () => {
         complete();
-        router.replace(isSignedIn ? "/(tabs)" : "/(auth)/welcome");
+        router.replace("/");
     };
 };

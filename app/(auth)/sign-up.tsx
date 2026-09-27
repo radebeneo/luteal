@@ -36,7 +36,7 @@ const SignUpScreen = () => {
             setError(getAuthErrorMessage(finalizeError, "Your account is ready, but we couldn't sign you in. Please try again."));
             return;
         }
-        router.replace("/onboarding");
+        router.replace("/profile-setup");
     };
 
     const handleCreateAccount = async () => {
@@ -170,7 +170,7 @@ const SignUpScreen = () => {
                     </View>
                     <View nativeID="clerk-captcha" />
                     <CustomButton title="Create account" onPress={handleCreateAccount} isLoading={isLoading} />
-                    <SocialAuthButtons mode="sign-up" destination="/onboarding" disabled={isLoading} />
+                    <SocialAuthButtons mode="sign-up" destination="/profile-setup" disabled={isLoading} />
                 </>
             ) : (
                 <>

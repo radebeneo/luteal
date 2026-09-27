@@ -1,7 +1,7 @@
 import CustomButton from "@/components/CustomButton";
 import CustomHeader from "@/components/CustomHeader";
-import { useOnboardingStore } from "@/store/onboarding.store";
 import { usePocketStore } from "@/store/pocket.store";
+import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { useSettingsStore } from "@/store/settings.store";
 import { useAuth } from "@clerk/expo";
 import { router } from "expo-router";
@@ -16,15 +16,15 @@ const ProfileRow = ({ label, value }: { label: string; value: string }) => (
 );
 
 const Profile = () => {
-    const { answers, reset: resetOnboarding } = useOnboardingStore();
+    const { answers, reset: resetProfileSetup } = useProfileSetupStore();
     const { clearPocket } = usePocketStore();
     const { notificationsEnabled, setNotificationsEnabled, tetherContact } = useSettingsStore();
     const { signOut } = useAuth();
 
     const handleReset = () => {
         clearPocket();
-        resetOnboarding();
-        router.replace("/onboarding/name");
+        resetProfileSetup();
+        router.replace("/profile-setup/step-1");
     };
 
     const handleLogout = async () => {

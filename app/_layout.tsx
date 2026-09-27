@@ -1,5 +1,6 @@
 import AccountDataBoundary from "@/components/auth/AccountDataBoundary";
 import { useOnboardingStore } from "@/store/onboarding.store";
+import { useProfileSetupStore } from "@/store/profileSetup.store";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from '@sentry/react-native';
@@ -43,14 +44,25 @@ export default Sentry.wrap(function RootLayout() {
     "QuickSand-Light": require('../assets/fonts/Quicksand-Light.ttf'),
   })
 
-  const [hasHydrated, setHasHydrated] = useState(useOnboardingStore.persist.hasHydrated());
+  const [hasHydrated, setHasHydrated] = useState(
+    useOnboardingStore.persist.hasHydrated() && useProfileSetupStore.persist.hasHydrated()
+  );
 
   useEffect(() => {
-    if (useOnboardingStore.persist.hasHydrated()) {
+    if (useOnboardingStore.persist.hasHydrated() && useProfileSetupStore.persist.hasHydrated()) {
       setHasHydrated(true);
       return;
     }
-    return useOnboardingStore.persist.onFinishHydration(() => setHasHydrated(true));
+    const unsubOnboarding = useOnboardingStore.persist.onFinishHydration(() => {
+      if (useProfileSetupStore.persist.hasHydrated()) setHasHydrated(true);
+    });
+    const unsubProfileSetup = useProfileSetupStore.persist.onFinishHydration(() => {
+      if (useOnboardingStore.persist.hasHydrated()) setHasHydrated(true);
+    });
+    return () => {
+      unsubOnboarding();
+      unsubProfileSetup();
+    };
   }, []);
 
   useEffect(() => {
@@ -67,6 +79,7 @@ export default Sentry.wrap(function RootLayout() {
           <Stack.Screen name="(auth)" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="onboarding" />
+          <Stack.Screen name="profile-setup" />
           <Stack.Screen name="bloomy" options={{ presentation: "modal" }} />
         </Stack>
       </AccountDataBoundary>
