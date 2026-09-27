@@ -102,11 +102,11 @@
     }
 
     .h1-bold {
-        @apply text-3xl font-quicksand-bold;
+        @apply text-3xl font-fredoka-bold;
     }
 
     .h3-bold {
-        @apply text-xl font-quicksand-bold;
+        @apply text-xl font-fredoka-bold;
     }
 
     .base-bold {

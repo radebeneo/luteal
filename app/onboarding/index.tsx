@@ -27,7 +27,7 @@ const OnboardingSplash = () => {
                 </View>
             }
             title={
-                <Text className="text-[32px] leading-[36px] font-quicksand-bold text-dark-100">
+                <Text className="text-[32px] leading-[36px] font-fredoka-bold text-dark-100">
                     Luteal Shield
                 </Text>
             }
