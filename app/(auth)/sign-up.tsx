@@ -168,6 +168,7 @@ const SignUpScreen = () => {
                             error={fieldErrors.password}
                         />
                     </View>
+                    <View nativeID="clerk-captcha" />
                     <CustomButton title="Create account" onPress={handleCreateAccount} isLoading={isLoading} />
                     <SocialAuthButtons mode="sign-up" destination="/onboarding" disabled={isLoading} />
                 </>
