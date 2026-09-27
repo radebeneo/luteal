@@ -9,9 +9,9 @@ import { ScrollView, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileRow = ({ label, value }: { label: string; value: string }) => (
-    <View className="profile-field justify-between">
-        <Text className="label !w-auto !p-0">{label}</Text>
-        <Text className="paragraph-medium text-dark-100">{value}</Text>
+    <View className="mb-4 w-full flex-row items-center justify-between">
+        <Text className="flex-1 text-base font-quicksand-medium text-gray-500">{label}</Text>
+        <Text className="max-w-[60%] shrink text-right text-base font-quicksand-medium text-dark-100">{value}</Text>
     </View>
 );
 
